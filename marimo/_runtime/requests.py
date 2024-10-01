@@ -141,6 +141,11 @@ class StopRequest:
 
 
 @dataclass
+class SetCookiesRequest:
+    cookies: dict[str, str]
+
+
+@dataclass
 class CodeCompletionRequest:
     id: CompletionRequestId
     document: str

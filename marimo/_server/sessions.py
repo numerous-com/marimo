@@ -52,6 +52,7 @@ from marimo._runtime.requests import (
     ExecutionRequest,
     SerializedCLIArgs,
     SerializedQueryParams,
+    SetCookiesRequest,
     SetUIElementValueRequest,
 )
 from marimo._server.exceptions import InvalidSessionException
@@ -608,13 +609,16 @@ class Session:
             self.heartbeat_task.cancel()
         self.kernel_manager.close_kernel()
 
-    def instantiate(self, request: InstantiateRequest) -> None:
+    def instantiate(
+        self, request: InstantiateRequest, cookies: dict[str, str]
+    ) -> None:
         """Instantiate the app."""
         execution_requests = tuple(
             ExecutionRequest(cell_id=cell_data.cell_id, code=cell_data.code)
             for cell_data in self.app_file_manager.app.cell_manager.cell_data()
         )
 
+        self.put_control_request(SetCookiesRequest(cookies))
         self.put_control_request(
             CreationRequest(
                 execution_requests=execution_requests,

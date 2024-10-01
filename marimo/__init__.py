@@ -15,6 +15,7 @@ marimo is designed to be:
 """
 
 from __future__ import annotations
+import threading
 
 __all__ = [
     # Core API
@@ -74,6 +75,8 @@ __all__ = [
     "tree",
     "video",
     "vstack",
+    # cookie stuff
+    "cookies",
 ]
 __version__ = "0.8.22"
 
@@ -117,6 +120,7 @@ from marimo._runtime.capture import (
 )
 from marimo._runtime.context.utils import running_in_notebook
 from marimo._runtime.control_flow import MarimoStopError, stop
+from marimo._runtime.cookies import cookies
 from marimo._runtime.runtime import (
     app_meta,
     cli_args,

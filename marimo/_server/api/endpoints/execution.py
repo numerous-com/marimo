@@ -84,7 +84,7 @@ async def instantiate(
     """
     app_state = AppState(request)
     body = await parse_request(request, cls=InstantiateRequest)
-    app_state.require_current_session().instantiate(body)
+    app_state.require_current_session().instantiate(body, request.cookies)
 
     return SuccessResponse()
 
